@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <title>Сургалтын Төвүүд | Learn.mn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --accent: #7c3aed; --bg: #f8fafc; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+        /* Left Side: Hero Section */
+        .side-hero {
+            flex: 0 0 400px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(124, 58, 237, 0.9)), 
+                        url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&q=80');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center;
+            color: white; padding: 40px; text-align: center;
+        }
+
+        .hero-content h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 20px; }
+        .hero-content p { opacity: 0.8; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; }
+
+        /* Right Side: List Section */
+        .main-content { flex: 1; overflow-y: auto; padding: 60px 40px; }
+        .list-container { max-width: 800px; margin: 0 auto; }
+
+        .center-card {
+            background: white; border-radius: 25px; padding: 30px;
+            margin-bottom: 20px; display: flex; align-items: center;
+            justify-content: space-between; border: 1px solid #e2e8f0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .center-card:hover {
+            transform: translateX(15px); /* Баруун тийш зөөлөн гулгах эффект */
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+        }
+
+        .icon-box {
+            width: 70px; height: 70px; border-radius: 20px;
+            background: #eff6ff; display: flex; align-items: center;
+            justify-content: center; font-size: 2rem; margin-right: 25px;
+        }
+
+        .info { flex: 1; }
+        .info h3 { margin: 0; color: #1e293b; font-weight: 800; }
+        .info p { margin: 5px 0 0; color: #64748b; font-size: 0.9rem; }
+
+        .btn-detail {
+            background: var(--primary); color: white; border: none;
+            padding: 12px 25px; border-radius: 50px; font-weight: 700;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-detail:hover { background: var(--accent); transform: scale(1.05); }
+
+        /* Modal Settings */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px);
+            display: none; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: white; width: 500px; padding: 40px; border-radius: 35px;
+            position: relative; animation: popIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .close-btn { position: absolute; top: 25px; right: 25px; cursor: pointer; font-size: 1.5rem; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <!-- Left Hero -->
+    <div class="side-hero">
+        <div class="hero-content">
+            <h1>Сургалтын Төвүүд</h1>
+            <p>Чадварлаг багш, тав тухтай орчин</p>
+        </div>
+    </div>
+
+    <!-- Right List -->
+    <div class="main-content">
+        <div class="list-container">
+            
+            <div class="center-card" onclick="showInfo('💻', 'Pinecone Academy', 'Програмчлалын эрчимжүүлсэн сургалт.')">
+                <div style="display: flex; align-items: center;">
+                    <div class="icon-box">💻</div>
+                    <div class="info">
+                        <h3>Pinecone Academy</h3>
+                        <p>Full-Stack хөгжүүлэгч бэлтгэх 9 сарын сургалт.</p>
+                    </div>
+                </div>
+                <button class="btn-detail">Үзэх</button>
+            </div>
+
+            <div class="center-card" onclick="showInfo('🇬🇧', 'Jet School of English', 'Монголын хамгийн том англи хэлний сургууль.')">
+                <div style="display: flex; align-items: center;">
+                    <div class="icon-box">🇬🇧</div>
+                    <div class="info">
+                        <h3>Jet School of English</h3>
+                        <p>Бүх түвшний англи хэлний сургалт.</p>
+                    </div>
+                </div>
+                <button class="btn-detail">Үзэх</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-card">
+            <span class="close-btn" onclick="closeInfo()">&times;</span>
+            <div id="modal-icon" style="font-size: 4rem; margin-bottom: 20px;">💻</div>
+            <h2 id="modal-name" style="font-weight: 900;">Сургуулийн нэр</h2>
+            <p id="modal-desc" style="color: #64748b; line-height: 1.6;"></p>
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 25px 0;">
+            <p><b>Хичээллэх өдрүүд:</b> Даваа - Баасан</p>
+            <p><b>Хугацаа:</b> 3-9 сар</p>
+            <button class="btn-detail" style="width: 100%; margin-top: 20px; padding: 18px;">Бүртгүүлэх</button>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal');
+        function showInfo(icon, name, desc) {
+            document.getElementById('modal-icon').innerText = icon;
+            document.getElementById('modal-name').innerText = name;
+            document.getElementById('modal-desc').innerText = desc;
+            modal.classList.add('active');
+        }
+        function closeInfo() { modal.classList.remove('active'); }
+        window.onclick = (e) => { if(e.target === modal) closeInfo(); }
+    </script>
+</body>
+</html>

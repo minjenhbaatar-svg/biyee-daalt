@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <title>Тэтгэлэг | Learn.mn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --accent: #7c3aed; --bg: #f1f5f9; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); margin: 0; }
+        
+        /* Таны үндсэн Hero Banner */
+        .hero-banner {
+            background: linear-gradient(rgba(37, 99, 235, 0.85), rgba(124, 58, 237, 0.85)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80');
+            background-size: cover; background-position: center;
+            height: 350px; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center;
+        }
+
+        .container { max-width: 1000px; margin: -60px auto 50px; padding: 0 20px; }
+        
+        .s-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 30px; padding: 35px;
+            margin-bottom: 25px; display: flex; align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .s-card:hover { transform: scale(1.02); box-shadow: 0 30px 60px rgba(37, 99, 235, 0.1); border-color: var(--primary); }
+
+        .s-icon { 
+            width: 80px; height: 80px; background: #eff6ff; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; font-size: 2.2rem;
+            margin-right: 30px; flex-shrink: 0;
+        }
+
+        .s-info { flex: 1; }
+        .s-info h3 { margin: 0 0 5px; font-weight: 800; color: #1e293b; }
+        .s-info p { color: #64748b; font-size: 0.9rem; margin: 0; }
+
+        .s-status { text-align: right; }
+        .deadline { color: #ef4444; font-weight: 800; font-size: 0.85rem; display: block; margin-top: 5px; }
+
+        .btn-apply {
+            padding: 12px 28px; background: var(--primary); color: white;
+            text-decoration: none; border-radius: 50px; font-weight: 700;
+            font-size: 0.85rem; display: inline-block; transition: 0.3s;
+            border: none; cursor: pointer;
+        }
+        .btn-apply:hover { background: var(--accent); box-shadow: 0 10px 20px rgba(124, 58, 237, 0.2); }
+
+        /* --- ШИНЭЭР НЭМСЭН MODAL СТИЛЬ --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px);
+            display: none; align-items: center; justify-content: center; z-index: 9999;
+            opacity: 0; transition: 0.3s ease;
+        }
+
+        .modal-card {
+            background: white; width: 90%; max-width: 600px;
+            border-radius: 40px; padding: 50px; position: relative;
+            transform: translateY(40px); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.2);
+        }
+
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-overlay.active .modal-card { transform: translateY(0); }
+
+        .close-modal {
+            position: absolute; top: 30px; right: 30px; font-size: 2rem;
+            cursor: pointer; color: #94a3b8; line-height: 1;
+        }
+        
+        .modal-body h2 { font-weight: 900; color: #1e293b; margin-top: 15px; }
+        .modal-body ul { padding-left: 20px; color: #475569; line-height: 1.8; }
+        .modal-badge { background: #fef2f2; color: #ef4444; padding: 5px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-banner">
+        <div>
+            <h1 style="font-size: 3.5rem; font-weight: 900; margin: 0;">Тэтгэлэгт Хөтөлбөрүүд</h1>
+            <p style="letter-spacing: 3px; opacity: 0.9; margin-top: 10px;">ДЭЛХИЙН БОЛОВСРОЛЫГ ТЭТГЭЛЭГТЭЙГЭЭР</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Тэтгэлэг 1 -->
+        <div class="s-card" onclick="openDetails('🌍', 'Global Korea Scholarship (GKS)', 'БНСУ-ын Засгийн газрын бүрэн тэтгэлэгт хөтөлбөр.', '05 сарын 20')">
+            <div class="s-icon">🌍</div>
+            <div class="s-info">
+                <h3>Global Korea Scholarship (GKS)</h3>
+                <p>БНСУ-ын Засгийн газрын бүрэн тэтгэлэгт хөтөлбөр.</p>
+            </div>
+            <div class="s-status">
+                <button class="btn-apply">Өргөдөл гаргах</button>
+                <span class="deadline">Дуусах: 05 сарын 20</span>
+            </div>
+        </div>
+
+        <!-- Тэтгэлэг 2 -->
+        <div class="s-card" onclick="openDetails('🎓', 'MEXT Scholarship', 'Япон улсын Засгийн газрын сургалтын тэтгэлэг.', '06 сарын 01')">
+            <div class="s-icon">🎓</div>
+            <div class="s-info">
+                <h3>MEXT Scholarship</h3>
+                <p>Япон улсын Засгийн газрын сургалтын тэтгэлэг.</p>
+            </div>
+            <div class="s-status">
+                <button class="btn-apply">Өргөдөл гаргах</button>
+                <span class="deadline">Дуусах: 06 сарын 01</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Дэлгэрэнгүй харах Modal Цонх -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card">
+            <span class="close-modal" onclick="closeDetails()">&times;</span>
+            <div class="modal-body">
+                <span id="m-icon" style="font-size: 4rem;">🌍</span>
+                <div style="margin-top: 20px;">
+                    <span class="modal-badge" id="m-deadline">Хугацаа</span>
+                </div>
+                <h2 id="m-title">Тэтгэлгийн нэр</h2>
+                <p id="m-desc" style="font-size: 1.1rem; color: #64748b; margin-bottom: 30px;"></p>
+                
+                <h4 style="margin: 0; color: #1e293b;">Бүрдүүлэх материалууд:</h4>
+                <ul>
+                    <li>Сүүлийн 3 жилийн сурлагын дүн</li>
+                    <li>Хэлний түвшний оноо (IELTS/TOPIK)</li>
+                    <li>Тодорхойлох захидал</li>
+                    <li>Суралцах төлөвлөгөө</li>
+                </ul>
+
+                <button class="btn-apply" style="width: 100%; padding: 20px; margin-top: 20px; font-size: 1rem;">
+                    Албан ёсны сайт руу очих
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('modalOverlay');
+        const mTitle = document.getElementById('m-title');
+        const mDesc = document.getElementById('m-desc');
+        const mIcon = document.getElementById('m-icon');
+        const mDeadline = document.getElementById('m-deadline');
+
+        function openDetails(icon, title, desc, deadline) {
+            mIcon.innerText = icon;
+            mTitle.innerText = title;
+            mDesc.innerText = desc;
+            mDeadline.innerText = "Эцсийн хугацаа: " + deadline;
+            
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Хуудасны scroll-ыг царцаах
+        }
+
+        function closeDetails() {
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Буцааж хэвийн болгох
+        }
+
+        // Цонхны гадна талд дарахад хаах
+        overlay.onclick = (e) => {
+            if(e.target === overlay) closeDetails();
+        }
+    </script>
+</body>
+</html>

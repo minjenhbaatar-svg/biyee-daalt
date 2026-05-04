@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn.mn | Нэвтрэх & Бүртгүүлэх</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: var(--bg-light); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-animate {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+            z-index: -1;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-weight: 900; font-size: 1.8rem; color: var(--primary);
+            text-decoration: none; display: block; text-align: center; margin-bottom: 20px;
+        }
+
+        /* Forms Toggle Logic */
+        .form-box { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .form-box.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-weight: 800; margin-bottom: 25px; text-align: center; font-size: 1.4rem; }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label {
+            display: block; font-weight: 600; font-size: 0.8rem;
+            margin-bottom: 6px; color: #64748b;
+        }
+        .input-group input {
+            width: 100%; padding: 14px 18px; border-radius: 12px;
+            border: 2px solid #e2e8f0; font-family: inherit; font-weight: 600;
+            transition: var(--transition); outline: none;
+        }
+        .input-group input:focus {
+            border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .action-btn {
+            width: 100%; background: var(--primary); color: #fff;
+            padding: 15px; border: none; border-radius: 12px;
+            font-weight: 700; font-size: 1rem; cursor: pointer;
+            transition: var(--transition); margin-top: 10px;
+        }
+        .action-btn:hover {
+            transform: translateY(-3px); border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
+
+        .switch-text {
+            margin-top: 20px; text-align: center; font-size: 0.85rem; color: #64748b;
+        }
+        .switch-text a {
+            color: var(--primary); text-decoration: none; font-weight: 700; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate"></div>
+
+    <div class="container">
+        <a href="index.html" class="logo">LEARN<span>.MN</span></a>
+
+        <!-- Нэвтрэх хэсэг -->
+        <div id="loginForm" class="form-box active">
+            <h2>Тавтай морил</h2>
+            <form onsubmit="handleAuth(event, 'Нэвтэрч байна...')">
+                <div class="input-group">
+                    <label>Цахим шуудан</label>
+                    <input type="email" placeholder="Email хаяг" required>
+                </div>
+                <div class="input-group">
+                    <label>Нууц үг</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="action-btn">Нэвтрэх</button>
+            </form>
+            <p class="switch-text">Бүртгэлгүй юу? <a onclick="toggleForm()">Шинээр бүртгүүлэх</a></p>
+        </div>
+
+        <!-- Бүртгүүлэх хэсэг -->
+        <div id="registerForm" class="form-box">
+            <h2>Бүртгэл үүсгэх</h2>
+            <form onsubmit="handleAuth(event, 'Бүртгэж байна...')">
+                <div class="input-group">
+                    <label>Овог нэр</label>
+                    <input type="text" placeholder="Таны нэр" required>
+                </div>
+                <div class="input-group">
+                    <label>Цахим шуудан</label>
+                    <input type="email" placeholder="example@mail.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Нууц үг</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="action-btn">Бүртгүүлэх</button>
+            </form>
+            <p class="switch-text">Бүртгэлтэй юу? <a onclick="toggleForm()">Нэвтрэх хэсэг рүү</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Формуудын хооронд шилжих функц
+        function toggleForm() {
+            const login = document.getElementById('loginForm');
+            const register = document.getElementById('registerForm');
+            
+            login.classList.toggle('active');
+            register.classList.toggle('active');
+        }
+
+        // Ачаалж буй эффект үзүүлээд үндсэн хуудас руу шилжих
+        function handleAuth(event, text) {
+            event.preventDefault();
+            const btn = event.target.querySelector('.action-btn');
+            btn.innerHTML = text;
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
